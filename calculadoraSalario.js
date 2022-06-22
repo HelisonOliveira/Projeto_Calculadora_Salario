@@ -10,9 +10,11 @@
 
 let salario = 10000
 let imposto = 0.27
-let horas = 240
+let horas = 220
 
 console.log(imprimirSalarioMes(salario, imposto, horas))
+
+//function CalcSalario () {
 
 
 function calcJornadaMensal () {
@@ -53,15 +55,33 @@ function calcularImposto () {
         let valorHrExtra = calcularHoraExtra()
         let vrTotalSalario = salario + valorHrExtra
         let valorImposto = vrTotalSalario*imposto
+        if (imposto>0) {
     return  valorImposto
+} return valorImposto
 }
 //console.log(calcularImposto(salario))
+
+function calcDescontos () {
+    let vHNormal = valorHrSalarioBase(salario)
+    let jornadaTrab = calcJornadaMensal(horas)
+    let hrTrab = horas
+    let descontos = 0
+        if (jornadaTrab > hrTrab) {
+            descontos =  vHNormal*(jornadaTrab-horas)  
+            return descontos
+        } return descontos
+}
+
+//console.log(calcDescontos())
 
 function imprimirSalarioMes () {
     let valorHrExtra = calcularHoraExtra()
     let vrImposto = calcularImposto()
+    let vrdescontos = calcDescontos()
+    let totalDesc = vrdescontos + vrImposto
     let salarioBruto = salario + valorHrExtra
-    let salarioLiquido = salarioBruto - vrImposto
+    let salarioLiquido = salarioBruto - totalDesc
     
-   return `O Valor a receber é de: Salário Bruto R$: ${salarioBruto.toFixed(2).toString().replace(".",",")} {(+)Salário: R$ ${salario.toFixed(2).toString().replace(".",",")} (+)Horas Extras: R$ ${valorHrExtra.toFixed(2).toString().replace(".",",")}} (-) {Imposto: R$ ${vrImposto.toFixed(2).toString().replace(".",",")}} = Salário Líquido a receber é de R$ : ${salarioLiquido.toFixed(2).toString().replace(".",",")} `
+   return `O Valor a receber é de: Salário Bruto: R$ ${salarioBruto.toFixed(2).toString().replace(".",",")} (+)Salário: R$ ${salario.toFixed(2).toString().replace(".",",")} (+) Hora Extra: ${valorHrExtra.toFixed(2).toString().replace(".",",")}} Descontos: R$ ${totalDesc.toFixed(2).toString().replace(".",",")} {(-) Faltas: ${vrdescontos.toFixed(2).toString().replace(".",",")} (-) Impostos: ${vrImposto.toFixed(2).toString().replace(".",",")}} = Salário Líquido a receber é de R$ : ${salarioLiquido.toFixed(2).toString().replace(".",",")}`
+
 }
