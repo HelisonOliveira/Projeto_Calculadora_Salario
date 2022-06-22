@@ -8,52 +8,58 @@
 // criar função para cálculo das horas extras
 // imprimir resultado
 
-let salario = 2000
+let salario = 10000
 let imposto = 0.27
-let horas = 44
+let horas = 240
 
 console.log(imprimirSalarioMes(salario, imposto, horas))
 
-function calcHoraNormal (salario){
-        let horasSemanais = 40
-      return  salario/horasSemanais              
+
+function calcJornadaMensal () {
+    let jornadaHrsSemanal = 40
+    return ((jornadaHrsSemanal/6)*30)
+}
+//console.log(calcJornadaMensal())
+function valorHrSalarioBase (salario){
+        let jornadaHrMes = calcJornadaMensal()
+      return  salario/jornadaHrMes             
 } 
-//console.log(calcHoraNormal(salario))
+//console.log(valorHrSalarioBase(salario))
 
 function verificarQuantHrExtra (horas) {
-    let horaExtra = 0
-    let horaNormal = 40
-    if (horas>40) {
-        horaExtra = horas - horaNormal
-        return horaExtra 
-    } return horaExtra
+    let quantHrExtra = 0
+    let quantHrNormal = calcJornadaMensal()
+    if (horas>quantHrNormal) {
+        quantHrExtra = horas - quantHrNormal
+        return quantHrExtra 
+    } return quantHrExtra
 }
 //console.log(verificarQuantHrExtra(horas))
 
-function calcularHoraExtra (horas) {
-    let quantHrExtra = verificarQuantHrExtra(horas)
-    let acrescimoHoraExtra = 0.6
-    let horaNormal = calcHoraNormal(salario)
+function calcularHoraExtra () {
+    let hrsExtra = verificarQuantHrExtra(horas)
+    let acrescimoHrExtra = 0.6
+    let vrHrNormal = valorHrSalarioBase(salario)
     let vrHrExtra = 0
-        if (quantHrExtra > 0) {
-            vrHrExtra =  quantHrExtra * (horaNormal*(1+acrescimoHoraExtra))  
+        if (hrsExtra > 0) {
+            vrHrExtra =  hrsExtra * (vrHrNormal*(1+acrescimoHrExtra))  
             return vrHrExtra 
         } return vrHrExtra 
     }
 
 //console.log(calcularHoraExtra(quantHrExtra))
 
-function calcularImposto (salario) {
-        let valorHrExtra = calcularHoraExtra(horas)
+function calcularImposto () {
+        let valorHrExtra = calcularHoraExtra()
         let vrTotalSalario = salario + valorHrExtra
         let valorImposto = vrTotalSalario*imposto
     return  valorImposto
 }
 //console.log(calcularImposto(salario))
 
-function imprimirSalarioMes (salario, imposto, horas) {
-    let valorHrExtra = calcularHoraExtra(horas)
-    let vrImposto = calcularImposto(salario)
+function imprimirSalarioMes () {
+    let valorHrExtra = calcularHoraExtra()
+    let vrImposto = calcularImposto()
     let salarioBruto = salario + valorHrExtra
     let salarioLiquido = salarioBruto - vrImposto
     
