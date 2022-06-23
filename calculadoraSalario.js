@@ -8,33 +8,27 @@
 // criar função para cálculo das horas extras
 // imprimir resultado
 
-let salario = 10000
-let imposto = 0.27
-let horas = 220
-
-console.log(imprimirSalarioMes(salario, imposto, horas))
-
-//function CalcSalario () {
-
+const salario = 5000
+const imposto = 0.25
+const horas = 220
 
 function calcJornadaMensal () {
     let jornadaHrsSemanal = 40
     return ((jornadaHrsSemanal/6)*30)
 }
 //console.log(calcJornadaMensal())
-function valorHrSalarioBase (salario){
-        let jornadaHrMes = calcJornadaMensal()
+
+function valorHrSalarioBase (){
+    let jornadaHrMes = calcJornadaMensal()
       return  salario/jornadaHrMes             
 } 
 //console.log(valorHrSalarioBase(salario))
 
-function verificarQuantHrExtra (horas) {
-    let quantHrExtra = 0
+function verificarQuantHrExtra () {
     let quantHrNormal = calcJornadaMensal()
     if (horas>quantHrNormal) {
-        quantHrExtra = horas - quantHrNormal
-        return quantHrExtra 
-    } return quantHrExtra
+        return horas - quantHrNormal 
+    } return 0
 }
 //console.log(verificarQuantHrExtra(horas))
 
@@ -42,34 +36,30 @@ function calcularHoraExtra () {
     let hrsExtra = verificarQuantHrExtra(horas)
     let acrescimoHrExtra = 0.6
     let vrHrNormal = valorHrSalarioBase(salario)
-    let vrHrExtra = 0
-        if (hrsExtra > 0) {
-            vrHrExtra =  hrsExtra * (vrHrNormal*(1+acrescimoHrExtra))  
-            return vrHrExtra 
-        } return vrHrExtra 
+            if (hrsExtra > 0) {
+            return hrsExtra * (vrHrNormal*(1+acrescimoHrExtra))  
+        } return 0 
     }
 
 //console.log(calcularHoraExtra(quantHrExtra))
 
 function calcularImposto () {
-        let valorHrExtra = calcularHoraExtra()
-        let vrTotalSalario = salario + valorHrExtra
-        let valorImposto = vrTotalSalario*imposto
+    let valorHrExtra = calcularHoraExtra()
+    let vrTotalSalario = salario + valorHrExtra
+    let valorImposto = vrTotalSalario*imposto
         if (imposto>0) {
     return  valorImposto
-} return valorImposto
+} return 0
 }
 //console.log(calcularImposto(salario))
 
 function calcDescontos () {
     let vHNormal = valorHrSalarioBase(salario)
     let jornadaTrab = calcJornadaMensal(horas)
-    let hrTrab = horas
-    let descontos = 0
-        if (jornadaTrab > hrTrab) {
+        if (jornadaTrab > horas) {
             descontos =  vHNormal*(jornadaTrab-horas)  
             return descontos
-        } return descontos
+        } return 0
 }
 
 //console.log(calcDescontos())
@@ -82,6 +72,7 @@ function imprimirSalarioMes () {
     let salarioBruto = salario + valorHrExtra
     let salarioLiquido = salarioBruto - totalDesc
     
-   return `O Valor a receber é de: Salário Bruto: R$ ${salarioBruto.toFixed(2).toString().replace(".",",")} (+)Salário: R$ ${salario.toFixed(2).toString().replace(".",",")} (+) Hora Extra: ${valorHrExtra.toFixed(2).toString().replace(".",",")}} Descontos: R$ ${totalDesc.toFixed(2).toString().replace(".",",")} {(-) Faltas: ${vrdescontos.toFixed(2).toString().replace(".",",")} (-) Impostos: ${vrImposto.toFixed(2).toString().replace(".",",")}} = Salário Líquido a receber é de R$ : ${salarioLiquido.toFixed(2).toString().replace(".",",")}`
+   console.log(`O Valor a receber é de: Salário Bruto: R$ ${salarioBruto.toFixed(2).toString().replace(".",",")} {(+)Salário: R$ ${salario.toFixed(2).toString().replace(".",",")} (+) Hora Extra: ${valorHrExtra.toFixed(2).toString().replace(".",",")}} Descontos: R$ ${totalDesc.toFixed(2).toString().replace(".",",")} {(-) Faltas: ${vrdescontos.toFixed(2).toString().replace(".",",")} (-) Impostos: ${vrImposto.toFixed(2).toString().replace(".",",")}} = Salário Líquido a receber é de: R$ ${salarioLiquido.toFixed(2).toString().replace(".",",")}`)
 
 }
+imprimirSalarioMes(salario,imposto,horas)
